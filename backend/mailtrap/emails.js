@@ -1,4 +1,4 @@
-import { PASSWORD_RESET_REQUEST_TEMPLATE, VERIFICATION_EMAIL_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE } from "./emailTemplate.js"
+import { PASSWORD_RESET_REQUEST_TEMPLATE, VERIFICATION_EMAIL_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE, WELCOME_EMAIL_TEMPLATE } from "./emailTemplate.js"
 import { mailtrapClient, sender } from "./mailtrap.config.js"
 
 export const sendVerificationEmailCode = async (email, verificationToken) => {
@@ -30,10 +30,13 @@ export const sendWelcomeEmail = async (email, name) => {
         const response = await mailtrapClient.send({
             from: sender,
             to: recipients,
-            template_uuid: "1ddc4659-3b78-4d05-b75f-53085dde2476",
-            template_variables: {
-                "name": name
-            }
+            subject: "Welcome Email to Freelancer HUB",
+            html: WELCOME_EMAIL_TEMPLATE.replace("{username}", name),
+            category: "Welcome Email"
+            // template_uuid: "1ddc4659-3b78-4d05-b75f-53085dde2476",
+            // template_variables: {
+            //     "name": name
+            // }
         })
         console.log("Welcome Email sent successfully", response);
     } catch (error) {

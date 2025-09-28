@@ -93,3 +93,33 @@ export const PASSWORD_RESET_REQUEST_TEMPLATE = `
 </body>
 </html>
 `;
+
+
+
+export const WELCOME_EMAIL_TEMPLATE = `
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Welcome to FreelanceHub</title>
+</head>
+<body style="margin:0;padding:0;background:#f9fafb;font-family:Arial, Helvetica, sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;padding:40px 0;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="500" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:8px;padding:20px;text-align:center;">
+          <tr>
+            <td>
+              <h2 style="margin:0 0 12px;font-size:22px;color:#111827;">Welcome to FreelanceHub 🎉</h2>
+              <p style="margin:0;font-size:16px;color:#374151;">
+                Hi <strong>{username}</strong>, we’re excited to have you join us!
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+`;
