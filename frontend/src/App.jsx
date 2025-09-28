@@ -9,6 +9,7 @@ import { useEffect } from "react"
 import { LoadingSpinner } from "./component/LoadingSpinner.jsx"
 import { ForgotPasswordPage } from "./pages/ForgotPasswordPage.jsx"
 import { ResetPasswordPage } from "./pages/ResetPasswordPage.jsx"
+import { NotFound } from "./pages/NotFound.jsx"
 
 
 // protected Route for unauthenticated User
@@ -78,6 +79,8 @@ function App() {
               <ResetPasswordPage />
             </RedirectAuthenticatedUser>
           } />
+          {/* catch all routes */}
+          <Route path='*' element={<NotFound />} />
         </Routes>
         <Toaster />
       </BrowserRouter>
