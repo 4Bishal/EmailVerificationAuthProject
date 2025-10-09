@@ -12,7 +12,7 @@ const app = express();
 
 const server = http.createServer(app);
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8000 || 8080 || 9090;
 
 app.use(cors({
     origin: "http://localhost:5173",
