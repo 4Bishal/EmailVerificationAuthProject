@@ -15,7 +15,7 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 8000 || 8080 || 9090;
 
 app.use(cors({
-    origin: ["http://localhost:5173", "https://emailverificationauthprojectbackend.onrender.com"],
+    origin: ["http://localhost:5173", "https://emailverificationauthproject.onrender.com"],
     credentials: true
 }));
 
