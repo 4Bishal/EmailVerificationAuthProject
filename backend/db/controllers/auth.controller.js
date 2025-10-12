@@ -18,7 +18,7 @@ export const registerHandle = async (req, res) => {
 
         let isUserExists = await User.findOne({ email });
         if (isUserExists) {
-            res.status(status.BAD_REQUEST).json({ message: "User Already Exists", success: false });
+            return res.status(status.BAD_REQUEST).json({ message: "User Already Exists", success: false });
         }
 
         const hashedPass = await bcrypt.hash(password, 10);
@@ -38,8 +38,11 @@ export const registerHandle = async (req, res) => {
         // jwtToken Setup
         generateTokenAndSetCookie(res, newUser._id);
 
+        // Dynamically get client URL
+        const clientUrl = req.headers.origin || process.env.CLIENT_URL;
+
         // Send VerificationToken
-        await sendVerificationEmailCode(newUser.email, verificationToken);
+        await sendVerificationEmailCode(newUser.email, `${clientUrl}/verify-email/${verificationToken}`);
 
         res.status(status.CREATED).json({
             message: "New User registered Successfully",
@@ -65,7 +68,7 @@ export const verifyEmail = async (req, res) => {
         })
 
         if (!user) {
-            res.status(status.NOT_FOUND).json({ success: false, message: "Verification Token Fails or expires" });
+            return res.status(status.NOT_FOUND).json({ success: false, message: "Verification Token Fails or expires" });
         }
 
         user.isVerified = true;
@@ -73,7 +76,6 @@ export const verifyEmail = async (req, res) => {
         user.verificationTokenExpiressAt = undefined;
 
         await user.save();
-
 
         await sendWelcomeEmail(user.email, user.name);
         res.status(status.OK).json({
@@ -99,14 +101,13 @@ export const loginHandle = async (req, res) => {
         const user = await User.findOne({ email });
 
         if (!user) {
-            res.status(status.BAD_REQUEST).json({ success: false, message: "Invalid Username or password" });
+            return res.status(status.BAD_REQUEST).json({ success: false, message: "Invalid Username or password" });
         }
 
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
-
         if (!isPasswordCorrect) {
-            res.status(status.UNAUTHORIZED).json({ success: false, message: "Invalid Username or password" });
+            return res.status(status.UNAUTHORIZED).json({ success: false, message: "Invalid Username or password" });
         }
 
         generateTokenAndSetCookie(res, user._id);
@@ -150,23 +151,23 @@ export const forgotPassword = async (req, res) => {
         const user = await User.findOne({ email })
 
         if (!user) {
-            res.status(status.NOT_FOUND).json({ success: false, message: "Email doesn't exist" });
+            return res.status(status.NOT_FOUND).json({ success: false, message: "Email doesn't exist" });
         }
 
         // Generate reset token
-
         const resetPasswordToken = crypto.randomBytes(20).toString("hex");
         const resetPasswordExpiressAt = new Date(Date.now() + 1 * 60 * 60 * 1000); // 1 hr later
 
         user.resetPasswordToken = resetPasswordToken;
         user.resetPasswordExpiressAt = resetPasswordExpiressAt
 
-
         await user.save();
 
-        // send email
+        // Dynamically get client URL
+        const clientUrl = req.headers.origin || process.env.CLIENT_URL;
 
-        await sendResetPasswordMail(user.email, `${process.env.CLIENT_URL}/reset-password/${resetPasswordToken}`);
+        // send email
+        await sendResetPasswordMail(user.email, `${clientUrl}/reset-password/${resetPasswordToken}`);
         res.status(status.OK).json({ success: true, message: "Reset your Password Email has been sent successfully" });
     } catch (error) {
         console.log("Error sending reset your password mail - ", error.message);
@@ -178,38 +179,32 @@ export const forgotPassword = async (req, res) => {
 export const resetPassword = async (req, res) => {
     try {
         const { token } = req.params;
-        console.log(token);
         const { password } = req.body;
         const user = await User.findOne({
             resetPasswordToken: token,
             resetPasswordExpiressAt: { $gt: Date.now() },
         });
 
-        console.log(user);
-
         if (!user) {
-            res.status(status.NOT_FOUND).json({ success: false, message: "Invalid token or token expires" });
+            return res.status(status.NOT_FOUND).json({ success: false, message: "Invalid token or token expires" });
         }
 
-
         const hashedPass = await bcrypt.hash(password, 10);
-
         user.password = hashedPass;
-
         user.resetPasswordToken = undefined;
         user.resetPasswordExpiressAt = undefined;
 
         await user.save();
 
+        // Dynamically get client URL
+        const clientUrl = req.headers.origin || process.env.CLIENT_URL;
 
-        await sendResetSuccessEmail(user.email);
-
+        await sendResetSuccessEmail(user.email, clientUrl);
 
         res.status(status.OK).json({ success: true, message: "Reset Password Success Email sent successfully!" });
 
-
     } catch (error) {
-        res.status(status.INTERNAL_SERVER_ERROR).json({ success: false, message: error.messsage });
+        res.status(status.INTERNAL_SERVER_ERROR).json({ success: false, message: error.message });
     }
 }
 
@@ -218,7 +213,7 @@ export const checkAuth = async (req, res) => {
     try {
         const user = await User.findById(req.userId).select("-password");
         if (!user) {
-            res.status(status.NOT_FOUND).json({ success: false, message: "User doesn't exists" });
+            return res.status(status.NOT_FOUND).json({ success: false, message: "User doesn't exists" });
         }
 
         res.status(status.OK).json({ success: true, message: "User is Found", user });
