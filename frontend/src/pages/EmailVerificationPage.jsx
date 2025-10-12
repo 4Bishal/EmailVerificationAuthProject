@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Loader } from "lucide-react";
+import { Loader, Home } from "lucide-react";
 import { useAuthStore } from "../store/authStore";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast"
@@ -71,14 +71,23 @@ export const EmailVerificationPage = () => {
         }
 
     }, [code])
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-purple-100 p-6">
             <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="bg-white rounded-2xl shadow-xl p-10 w-full max-w-md text-center"
+                className="bg-white rounded-2xl shadow-xl p-10 w-full max-w-md text-center relative"
             >
+                {/* Home Icon */}
+                <button
+                    onClick={() => navigate("/")}
+                    className="absolute top-4 left-4 text-purple-600 hover:text-purple-800 transition-colors"
+                >
+                    <Home size={24} />
+                </button>
+
                 <h1 className="text-2xl font-bold text-purple-700 mb-2">Verify Your Email</h1>
                 <p className="text-gray-500 mb-8">Enter the 6-digit code sent to your email</p>
 
@@ -104,7 +113,7 @@ export const EmailVerificationPage = () => {
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`w-full bg-purple-600 text-white py-3  rounded-lg font-semibold flex items-center justify-center gap-2 hover:bg-purple-700 transition-colors ${!isLoading ? "opacity-60 cursor-not-allowed" : ""
+                    className={`w-full bg-purple-600 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 hover:bg-purple-700 transition-colors ${!isLoading ? "opacity-60 cursor-not-allowed" : ""
                         }`}
                     disabled={isLoading}
                 >
@@ -112,5 +121,5 @@ export const EmailVerificationPage = () => {
                 </motion.button>
             </motion.div>
         </div>
-    );
+    )
 };

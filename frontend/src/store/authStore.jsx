@@ -3,9 +3,13 @@ import axios from "axios"
 
 
 
-const baseUrl = "http://localhost:8000/api/auth"
-axios.defaults.withCredentials = true;
+// Dynamic base URL
+const baseUrl =
+    window.location.hostname === "localhost"
+        ? "http://localhost:8000/api/auth"
+        : "https://emailverificationauthprojectbackend.onrender.com/api/auth";
 
+axios.defaults.withCredentials = true;
 
 export const useAuthStore = create((set) => ({
     user: null,

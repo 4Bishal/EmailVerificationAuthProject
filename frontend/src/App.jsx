@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom"
 import { Home } from './pages/Home.jsx'
 import { RegisterPage } from './pages/RegisterPage.jsx'
 import { LoginPage } from './pages/LoginPage.jsx'
@@ -51,7 +51,7 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={
             <ProtectedRoute>
@@ -83,7 +83,7 @@ function App() {
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Toaster />
-      </BrowserRouter>
+      </HashRouter>
     </>
   )
 }
