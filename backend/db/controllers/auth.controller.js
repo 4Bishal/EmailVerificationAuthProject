@@ -42,7 +42,7 @@ export const registerHandle = async (req, res) => {
         const clientUrl = req.headers.origin || process.env.CLIENT_URL;
 
         // Send VerificationToken
-        await sendVerificationEmailCode(newUser.email, `${clientUrl}/verify-email/${verificationToken}`);
+        await sendVerificationEmailCode(newUser.email, verificationToken);
 
         res.status(status.CREATED).json({
             message: "New User registered Successfully",
@@ -167,7 +167,7 @@ export const forgotPassword = async (req, res) => {
         const clientUrl = req.headers.origin || process.env.CLIENT_URL;
 
         // send email
-        await sendResetPasswordMail(user.email, `${clientUrl}/reset-password/${resetPasswordToken}`);
+        await sendResetPasswordMail(user.email, `${clientUrl}/#/reset-password/${resetPasswordToken}`);
         res.status(status.OK).json({ success: true, message: "Reset your Password Email has been sent successfully" });
     } catch (error) {
         console.log("Error sending reset your password mail - ", error.message);
