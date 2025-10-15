@@ -101,21 +101,86 @@ export const WELCOME_EMAIL_TEMPLATE = `
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome to FreelanceHub</title>
 </head>
-<body style="margin:0;padding:0;background:#f9fafb;font-family:Arial, Helvetica, sans-serif;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;padding:40px 0;">
+<body style="margin:0;padding:0;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:60px 20px;">
     <tr>
       <td align="center">
-        <table role="presentation" width="500" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:8px;padding:20px;text-align:center;">
+        <!-- Main Container -->
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,0.15);overflow:hidden;">
+          
+          <!-- Header with Gradient -->
           <tr>
-            <td>
-              <h2 style="margin:0 0 12px;font-size:22px;color:#111827;">Welcome to FreelanceHub 🎉</h2>
-              <p style="margin:0;font-size:16px;color:#374151;">
-                Hi <strong>{username}</strong>, we’re excited to have you join us!
+            <td style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);padding:40px 30px;text-align:center;">
+              <div style="background:#ffffff;width:80px;height:80px;margin:0 auto 20px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                <span style="font-size:40px;">🎉</span>
+              </div>
+              <h1 style="margin:0;font-size:32px;color:#ffffff;font-weight:700;">Welcome to FreelanceHub!</h1>
+            </td>
+          </tr>
+          
+          <!-- Content -->
+          <tr>
+            <td style="padding:40px 30px;">
+              <p style="margin:0 0 20px;font-size:18px;color:#111827;line-height:1.6;">
+                Hi <strong style="color:#667eea;">{username}</strong>,
+              </p>
+              <p style="margin:0 0 30px;font-size:16px;color:#4b5563;line-height:1.6;">
+                We're thrilled to have you join our community of talented freelancers and clients! 🚀
+              </p>
+              
+              <!-- Features Grid -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding:20px;background:#f3f4f6;border-radius:12px;margin-bottom:15px;">
+                    <div style="font-size:24px;margin-bottom:8px;">💼</div>
+                    <h3 style="margin:0 0 8px;font-size:16px;color:#111827;font-weight:600;">Browse Projects</h3>
+                    <p style="margin:0;font-size:14px;color:#6b7280;line-height:1.5;">Discover amazing opportunities from clients worldwide</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="height:15px;"></td>
+                </tr>
+                <tr>
+                  <td style="padding:20px;background:#f3f4f6;border-radius:12px;margin-bottom:15px;">
+                    <div style="font-size:24px;margin-bottom:8px;">🤝</div>
+                    <h3 style="margin:0 0 8px;font-size:16px;color:#111827;font-weight:600;">Connect & Collaborate</h3>
+                    <p style="margin:0;font-size:14px;color:#6b7280;line-height:1.5;">Build lasting relationships with professionals</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="height:15px;"></td>
+                </tr>
+                <tr>
+                  <td style="padding:20px;background:#f3f4f6;border-radius:12px;">
+                    <div style="font-size:24px;margin-bottom:8px;">⚡</div>
+                    <h3 style="margin:0 0 8px;font-size:16px;color:#111827;font-weight:600;">Manage Workflows</h3>
+                    <p style="margin:0;font-size:14px;color:#6b7280;line-height:1.5;">Streamline your projects with our efficient tools</p>
+                  </td>
+                </tr>
+              </table>
+              
+
+            </td>
+          </tr>
+          
+          <!-- Footer -->
+          <tr>
+            <td style="background:#f9fafb;padding:30px;text-align:center;border-top:1px solid #e5e7eb;">
+              <p style="margin:0 0 12px;font-size:14px;color:#6b7280;">
+                Need help? We're here for you!
+              </p>
+              <p style="margin:0;font-size:12px;color:#9ca3af;">
+                © 2024 FreelanceHub. All rights reserved.
+              </p>
+              <p style="margin:8px 0 0;font-size:12px;color:#9ca3af;">
+                You received this email because you signed up for FreelanceHub.
               </p>
             </td>
           </tr>
+          
         </table>
       </td>
     </tr>

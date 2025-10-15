@@ -33,10 +33,6 @@ export const sendWelcomeEmail = async (email, name) => {
             subject: "Welcome Email to Freelancer HUB",
             html: WELCOME_EMAIL_TEMPLATE.replace("{username}", name),
             category: "Welcome Email"
-            // template_uuid: "1ddc4659-3b78-4d05-b75f-53085dde2476",
-            // template_variables: {
-            //     "name": name
-            // }
         })
         console.log("Welcome Email sent successfully", response);
     } catch (error) {
